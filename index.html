@@ -160,8 +160,10 @@
             display: grid; grid-template-columns: 1fr; gap: 35px; align-items: center;
         }
         @media (min-width: 768px) {
-            .framework-innovations-grid { grid-template-columns: 1fr 1.1fr; }
-            .framework-innovations-grid.image-right { grid-template-columns: 1.1fr 1fr; }
+            /* MODIFIED: Both grids use 1fr 1fr for equal column widths */
+            .framework-innovations-grid { grid-template-columns: 1fr 1fr; }
+            .framework-innovations-grid.image-right { grid-template-columns: 1fr 1fr; }
+            /* Keep order properties to ensure Text | Image visual layout for .image-right */
             .framework-innovations-grid.image-right .text-content { order: 1; }
             .framework-innovations-grid.image-right .image-content { order: 2; }
         }
@@ -180,7 +182,7 @@
         }
         .architecture-img-placeholder {
             width: 100%; 
-            max-width: 700px; 
+            /* max-width: 700px; /* This can be adjusted if needed, but 100% of grid column is fine */
             margin-left: auto; 
             margin-right: auto; 
             background-color: var(--white-color);
@@ -246,15 +248,20 @@
             margin-bottom: 40px; padding: 28px; background-color: var(--white-color);
             border-radius: 12px;
             box-shadow: 0 4px 15px var(--neutral-shadow-light);
-            /* display: block; by default, elements like div are block */
         }
         .showcase-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start; 
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 25px; 
+            flex-wrap: wrap; 
         }
         .showcase-header h3 { /* H3 specific to task/comparison cards */
             font-family: 'Quicksand', sans-serif;
             font-size: 1.7rem; font-weight: 600; color: var(--primary-color); margin: 0;
             text-align: left;
+            flex-shrink: 0; 
         }
         .carousel-container {
             position: relative; overflow: hidden; border-radius: 8px;
@@ -277,22 +284,47 @@
             background-color: var(--bg-color-subtle);
             margin-bottom: 10px;
         }
-        .carousel-controls { display: flex; gap: 12px; }
+        
+        .carousel-controls { 
+            display: flex; 
+            gap: 15px; 
+            align-items: center; 
+        }
+        .carousel-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 6px; 
+        }
+        .carousel-nav-label {
+            font-size: 0.85rem;
+            color: var(--text-color-subtle);
+            font-weight: 500;
+            font-family: 'Quicksand', sans-serif;
+        }
         .carousel-button {
-            background-color: var(--white-color); border: 1px solid var(--primary-color);
-            color: var(--primary-color); padding: 9px 13px; border-radius: 25px;
-            cursor: pointer; font-size: 1.1rem; line-height: 1;
-            transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+            background-color: var(--primary-color-dark); 
+            border: 1px solid var(--primary-color-dark); 
+            color: var(--white-color); 
+            padding: 8px 12px; 
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem; 
+            line-height: 1;
+            transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.2s;
         }
         .carousel-button:hover {
-            background-color: var(--accent-color);
+            background-color: var(--primary-color); 
             color: var(--white-color);
-            border-color: var(--accent-color);
+            border-color: var(--primary-color);
+            transform: scale(1.05); 
         }
         .carousel-button:disabled {
-            opacity: 0.5; cursor: not-allowed;
-            border-color: var(--border-color); color: var(--text-color-subtle);
-            background-color: var(--bg-color-subtle);
+            opacity: 0.6; 
+            cursor: not-allowed;
+            background-color: var(--text-color-subtle); 
+            border-color: var(--text-color-subtle);
+            color: var(--bg-color-subtle); 
+            transform: none; 
         }
         .caption { font-size: 0.88rem; color: var(--text-color-subtle); margin-top: 8px; text-align: center; font-weight: 300; }
 
@@ -391,10 +423,10 @@
 
     <section id="unic" class="section">
         <div class="container section-inner">
-            <h2 class="centered-title">UNIC: Framework & Key Innovations</h2>
-            <div class="framework-innovations-grid">
+            <h2 class="centered-title">UNIC: Framework & Designs</h2>
+            <div class="framework-innovations-grid"> <!-- First block: Pipeline -->
                 <div class="text-content">
-                    <h3>The Unified In-Context Framework</h3>
+                    <h3>Unified In-Context Framework</h3>
                     <p>UNIC unifies video editing by processing all inputs—noisy video latents, reference video tokens, and varied multi-modal condition tokens—as a combined sequence. This allows the native attention mechanisms of a Diffusion Transformer (DiT) to learn complex editing tasks "in-context," offering flexibility and simplicity.</p>
                     <ul>
                         <li>Unified model for diverse tasks.</li>
@@ -403,23 +435,23 @@
                     </ul>
                 </div>
                 <div class="image-content">
-                    <div class="architecture-img-placeholder" style="aspect-ratio: 10 / 6.5;">
+                    <div class="architecture-img-placeholder" style="aspect-ratio: 16 / 9;">
                         <img src="images/pipeline.png" alt="UNIC Overall Pipeline Visualization - Figure 3">
                     </div>
                 </div>
             </div>
-            <hr style="border: 0; height: 1px; background-color: var(--border-color); margin: 45px 0;">
-            <div class="framework-innovations-grid image-right">
+            <!-- Removed HR -->
+            <div class="framework-innovations-grid image-right" style="margin-top: 35px;"> <!-- Second block: Innovations, using image-right for HTML structure but visual order maintained by CSS -->
                  <div class="image-content">
-                    <div class="architecture-img-placeholder" style="aspect-ratio: 10 / 7;">
+                    <div class="architecture-img-placeholder" style="aspect-ratio: 16 / 9;">
                         <img src="images/innovations.png" alt="Diagram of Task-Aware RoPE & Condition Bias">
                     </div>
                 </div>
                 <div class="text-content">
-                    <h3>Core Innovations</h3>
-                    <h4>Task-aware RoPE</h4>
+                    <!-- "Core Innovations" H3 removed -->
+                    <h4>Task-aware RoPE</h4> <!-- Was H4 -->
                     <p style="font-size:0.9rem;">Dynamically assigns unique Rotary Positional Embedding (RoPE) frame indices based on task type and video length. This ensures coherent temporal understanding and correct alignment for diverse conditions.</p>
-                    <h4>Condition Bias</h4>
+                    <h4>Condition Bias</h4> <!-- Was H4 -->
                     <p style="font-size:0.9rem;">Adds a task-specific learnable embedding to condition tokens. This helps the model differentiate target tasks when modalities overlap, resolving ambiguity effectively.</p>
                 </div>
             </div>
@@ -429,7 +461,7 @@
     <section id="capabilities" class="section">
         <div class="container section-inner">
             <h2 class="centered-title">Capabilities</h2>
-            <p style="text-align:center; font-size: 1.05rem; color: var(--text-color-main); margin-bottom:30px; font-weight:300;">The single UNIC model masterfully handles a wide array of fundamental video editing tasks. Select a task below to explore examples. UNIC also exhibits remarkable emergent compositional abilities, showcased further down.</p>
+            <p style="text-align:center; font-size: 1.05rem; color: var(--text-color-main); margin-bottom:30px; font-weight:300;"UNIC handles diverse video editing tasks. Select a task below to explore examples. UNIC also exhibits emergent task composition abilities, showcased further down.</p>
             
             <div class="content-selector-tabs" id="capabilities-selector">
                 <button class="content-tab-button active" data-target-id="task-id-insertion">ID Insertion</button>
@@ -442,7 +474,18 @@
 
             <div class="content-display-area" id="capabilities-content-area">
                 <div class="task-entry" id="task-id-insertion">
-                    <div class="showcase-header"><h3>ID Insertion</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('task-id-insertion-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('task-id-insertion-carousel', 1)">❯</button></div></div>
+                    <div class="showcase-header"><h3>ID Insertion</h3>
+                        <div class="carousel-controls">
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('task-id-insertion-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('task-id-insertion-carousel', 1)">❯</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="carousel-container" id="task-id-insertion-carousel"><div class="carousel-track">
                         <div class="carousel-item">
                             <video class="video-player" playsinline autoplay muted loop poster="videos/posters/id_insertion_cow_wings_poster.jpg">
@@ -468,7 +511,18 @@
                 </div>
 
                 <div class="task-entry" id="task-id-swap">
-                    <div class="showcase-header"><h3>ID Swap</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('task-id-swap-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('task-id-swap-carousel', 1)">❯</button></div></div>
+                    <div class="showcase-header"><h3>ID Swap</h3>
+                        <div class="carousel-controls">
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('task-id-swap-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('task-id-swap-carousel', 1)">❯</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="carousel-container" id="task-id-swap-carousel"><div class="carousel-track">
                         <div class="carousel-item">
                             <video class="video-player" playsinline autoplay muted loop poster="videos/posters/id_swap_cow_wings_poster.jpg">
@@ -504,7 +558,18 @@
                 </div>
 
                 <div class="task-entry" id="task-delete">
-                    <div class="showcase-header"><h3>ID Deletion</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('task-delete-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('task-delete-carousel', 1)">❯</button></div></div>
+                    <div class="showcase-header"><h3>ID Deletion</h3>
+                        <div class="carousel-controls">
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('task-delete-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('task-delete-carousel', 1)">❯</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="carousel-container" id="task-delete-carousel"><div class="carousel-track">
                         <div class="carousel-item">
                             <video class="video-player" playsinline autoplay muted loop poster="videos/posters/id_insertion_cow_wings_poster.jpg">
@@ -518,6 +583,11 @@
                         </div>
                         <div class="carousel-item">
                             <video class="video-player" playsinline autoplay muted loop poster="videos/posters/id_deleteion_example2_poster.jpg">
+                                <source src="videos/delete-show3.mp4" type="video/mp4"> Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="carousel-item">
+                            <video class="video-player" playsinline autoplay muted loop poster="videos/posters/id_deleteion_example2_poster.jpg">
                                 <source src="videos/delete-show4.mp4" type="video/mp4"> Your browser does not support the video tag.
                             </video>
                         </div>
@@ -526,16 +596,22 @@
                                 <source src="videos/delete-show5.mp4" type="video/mp4"> Your browser does not support the video tag.
                             </video>
                         </div>
-                        <div class="carousel-item">
-                            <video class="video-player" playsinline autoplay muted loop poster="videos/posters/id_deleteion_example2_poster.jpg">
-                                <source src="videos/delete-show6.mp4" type="video/mp4"> Your browser does not support the video tag.
-                            </video>
-                        </div>
                     </div></div>
                 </div>
 
                 <div class="task-entry" id="task-re-camera">
-                    <div class="showcase-header"><h3>Re-Camera Control</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('task-re-camera-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('task-re-camera-carousel', 1)">❯</button></div></div>
+                    <div class="showcase-header"><h3>Re-Camera Control</h3>
+                        <div class="carousel-controls">
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('task-re-camera-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('task-re-camera-carousel', 1)">❯</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="carousel-container" id="task-re-camera-carousel"><div class="carousel-track">
                         <div class="carousel-item">
                             <video class="video-player" playsinline autoplay muted loop poster="videos/posters/re_camera_arc_right_poster.jpg">
@@ -575,7 +651,18 @@
                     </div></div>
                 </div>
                 <div class="task-entry" id="task-stylization">
-                    <div class="showcase-header"><h3>Stylization</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('task-stylization-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('task-stylization-carousel', 1)">❯</button></div></div>
+                    <div class="showcase-header"><h3>Stylization</h3>
+                        <div class="carousel-controls">
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('task-stylization-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('task-stylization-carousel', 1)">❯</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="carousel-container" id="task-stylization-carousel"><div class="carousel-track">
                         <div class="carousel-item">
                             <video class="video-player" playsinline autoplay muted loop poster="videos/posters/stylization_artistic_poster.jpg">
@@ -610,7 +697,18 @@
                     </div></div>
                 </div>
                 <div class="task-entry" id="task-propagation">
-                    <div class="showcase-header"><h3>First-frame Propagation</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('task-propagation-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('task-propagation-carousel', 1)">❯</button></div></div>
+                    <div class="showcase-header"><h3>First-frame Propagation</h3>
+                        <div class="carousel-controls">
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('task-propagation-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('task-propagation-carousel', 1)">❯</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="carousel-container" id="task-propagation-carousel"><div class="carousel-track">
                         <div class="carousel-item">
                             <video class="video-player" playsinline autoplay muted loop poster="videos/posters/id_insertion_cow_wings_poster.jpg">
@@ -653,8 +751,19 @@
             </h3>
              <p style="text-align:center; font-size: 1.05rem; color: var(--text-color-main); margin-bottom:20px; font-weight:300;">UNIC also exhibits remarkable emergent compositional abilities. Each example below can be explored via intuitive sliders.</p>
 
-            <div class="task-entry" id="comp-re-camera-style"> <!-- This is now always visible -->
-                <div class="showcase-header"><h3>Re-Camera + Stylization</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('comp-re-camera-style-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('comp-re-camera-style-carousel', 1)">❯</button></div></div>
+            <div class="task-entry" id="comp-re-camera-style"> 
+                <div class="showcase-header"><h3>Re-Camera + Stylization</h3>
+                    <div class="carousel-controls">
+                        <div class="carousel-nav-item">
+                            <button class="carousel-button prev" onclick="slideCarousel('comp-re-camera-style-carousel', -1)">❮</button>
+                            <span class="carousel-nav-label">Previous</span>
+                        </div>
+                        <div class="carousel-nav-item">
+                            <span class="carousel-nav-label">Next</span>
+                            <button class="carousel-button next" onclick="slideCarousel('comp-re-camera-style-carousel', 1)">❯</button>
+                        </div>
+                    </div>
+                </div>
                  <div class="carousel-container" id="comp-re-camera-style-carousel"><div class="carousel-track">
                     <div class="carousel-item">
                         <video class="video-player" playsinline autoplay muted loop poster="videos/posters/comp_re_camera_style_poster.jpg">
@@ -674,8 +783,19 @@
                 </div></div>
                 <p class="caption">Applying style while changing camera view.</p>
             </div>
-            <div class="task-entry" id="comp-insert-style"> <!-- This is now always visible -->
-                <div class="showcase-header"><h3>ID + Stylization</h3><div class="carousel-controls"><button class="carousel-button prev" onclick="slideCarousel('comp-insert-style-carousel', -1)">❮</button><button class="carousel-button next" onclick="slideCarousel('comp-insert-style-carousel', 1)">❯</button></div></div>
+            <div class="task-entry" id="comp-insert-style"> 
+                <div class="showcase-header"><h3>ID + Stylization</h3>
+                    <div class="carousel-controls">
+                        <div class="carousel-nav-item">
+                            <button class="carousel-button prev" onclick="slideCarousel('comp-insert-style-carousel', -1)">❮</button>
+                            <span class="carousel-nav-label">Previous</span>
+                        </div>
+                        <div class="carousel-nav-item">
+                            <span class="carousel-nav-label">Next</span>
+                            <button class="carousel-button next" onclick="slideCarousel('comp-insert-style-carousel', 1)">❯</button>
+                        </div>
+                    </div>
+                </div>
                  <div class="carousel-container" id="comp-insert-style-carousel"><div class="carousel-track">
                     <div class="carousel-item">
                         <video class="video-player" playsinline autoplay muted loop poster="videos/posters/compare_id_insert_input_poster.jpg">
@@ -701,7 +821,7 @@
     <section id="comparisons" class="section">
         <div class="container section-inner">
             <h2 class="centered-title">Visual Comparisons with Other Methods</h2>
-            <p style="text-align:center; font-size: 1.05rem; color: var(--text-color-main); margin-bottom:30px; font-weight:300;">Showcasing UNIC's visual quality against other leading methods. Select a comparison task below. Each video (Input, competing method, or UNIC) is shown on a separate slide. For detailed metrics, see <a href="#results" style="color: var(--primary-color-dark); font-weight:500;">Quantitative Results</a>.</p>
+            <p style="text-align:center; font-size: 1.05rem; color: var(--text-color-main); margin-bottom:30px; font-weight:300;">Showcasing UNIC's visual quality against other methods. Select a comparison task below. For detailed metrics, see <a href="#results" style="color: var(--primary-color-dark); font-weight:500;">Quantitative Results</a>.</p>
 
             <div class="content-selector-tabs" id="comparisons-selector">
                 <button class="content-tab-button active" data-target-id="comparison-id-insertion">ID Insertion</button>
@@ -717,8 +837,14 @@
                     <div class="showcase-header">
                         <h3>Comparison: ID Insertion</h3>
                         <div class="carousel-controls">
-                            <button class="carousel-button prev" onclick="slideCarousel('comparison-id-insertion-carousel', -1)">❮</button>
-                            <button class="carousel-button next" onclick="slideCarousel('comparison-id-insertion-carousel', 1)">❯</button>
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('comparison-id-insertion-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('comparison-id-insertion-carousel', 1)">❯</button>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-container" id="comparison-id-insertion-carousel">
@@ -746,8 +872,14 @@
                     <div class="showcase-header">
                         <h3>Comparison: ID Swap</h3>
                         <div class="carousel-controls">
-                            <button class="carousel-button prev" onclick="slideCarousel('comparison-id-swap-carousel', -1)">❮</button>
-                            <button class="carousel-button next" onclick="slideCarousel('comparison-id-swap-carousel', 1)">❯</button>
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('comparison-id-swap-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('comparison-id-swap-carousel', 1)">❯</button>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-container" id="comparison-id-swap-carousel">
@@ -775,8 +907,14 @@
                     <div class="showcase-header">
                         <h3>Comparison: ID Deletion</h3>
                         <div class="carousel-controls">
-                            <button class="carousel-button prev" onclick="slideCarousel('comparison-delete-carousel', -1)">❮</button>
-                            <button class="carousel-button next" onclick="slideCarousel('comparison-delete-carousel', 1)">❯</button>
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('comparison-delete-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('comparison-delete-carousel', 1)">❯</button>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-container" id="comparison-delete-carousel">
@@ -809,8 +947,14 @@
                     <div class="showcase-header">
                         <h3>Comparison: Re-Camera Control</h3>
                         <div class="carousel-controls">
-                            <button class="carousel-button prev" onclick="slideCarousel('comparison-recam-carousel', -1)">❮</button>
-                            <button class="carousel-button next" onclick="slideCarousel('comparison-recam-carousel', 1)">❯</button>
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('comparison-recam-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('comparison-recam-carousel', 1)">❯</button>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-container" id="comparison-recam-carousel">
@@ -838,8 +982,14 @@
                     <div class="showcase-header">
                         <h3>Comparison: Propagation</h3>
                         <div class="carousel-controls">
-                            <button class="carousel-button prev" onclick="slideCarousel('comparison-prop-carousel', -1)">❮</button>
-                            <button class="carousel-button next" onclick="slideCarousel('comparison-prop-carousel', 1)">❯</button>
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('comparison-prop-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('comparison-prop-carousel', 1)">❯</button>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-container" id="comparison-prop-carousel">
@@ -872,8 +1022,14 @@
                     <div class="showcase-header">
                         <h3>Comparison: Stylization</h3>
                         <div class="carousel-controls">
-                            <button class="carousel-button prev" onclick="slideCarousel('comparison-stylization-carousel', -1)">❮</button>
-                            <button class="carousel-button next" onclick="slideCarousel('comparison-stylization-carousel', 1)">❯</button>
+                            <div class="carousel-nav-item">
+                                <button class="carousel-button prev" onclick="slideCarousel('comparison-stylization-carousel', -1)">❮</button>
+                                <span class="carousel-nav-label">Previous</span>
+                            </div>
+                            <div class="carousel-nav-item">
+                                <span class="carousel-nav-label">Next</span>
+                                <button class="carousel-button next" onclick="slideCarousel('comparison-stylization-carousel', 1)">❯</button>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-container" id="comparison-stylization-carousel">
@@ -1146,8 +1302,11 @@
         const showcaseHeader = carouselContainer.closest('.task-entry, .comparison-entry');
         let prevButton, nextButton;
         if (showcaseHeader) { 
-             prevButton = showcaseHeader.querySelector('.carousel-button.prev');
-             nextButton = showcaseHeader.querySelector('.carousel-button.next');
+             const controls = showcaseHeader.querySelector('.carousel-controls');
+             if (controls) {
+                prevButton = controls.querySelector('.carousel-button.prev');
+                nextButton = controls.querySelector('.carousel-button.next');
+             }
         }
 
         if (numItems <= 1) {
@@ -1295,7 +1454,6 @@
             if (track) {
                 track.style.transform = 'translateX(0%)'; 
                 carousels[carouselContainer.id] = { currentIndex: 0 };
-                // Initial setup of buttons and first slide visibility. Play is handled by slideCarousel's internal logic.
                 slideCarousel(carouselContainer.id, 0); 
             }
         });
