@@ -328,7 +328,7 @@
             max-width: 100%; 
             aspect-ratio: 16 / 9;
             display: block;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 6px;
             background-color: var(--bg-color-subtle);
             margin-bottom: 10px;
@@ -451,6 +451,7 @@
 
     <nav>
         <div class="container">
+            <a href="#rebuttal-update">Rebuttal Update</a>
             <a href="#overview" class="active-nav">Overview</a>
             <a href="#unic">UNIC</a>
             <a href="#capabilities">Capabilities</a>
@@ -458,6 +459,46 @@
             <a href="#results">Quantitative Results</a>
         </div>
     </nav>
+
+    <section id="rebuttal-update" class="section">
+        <div class="container section-inner">
+            <h2 class="centered-title">Rebuttal Update: Ablation & Implementation</h2>
+            <p style="text-align:center; font-size: 1.05rem; color: var(--text-color-main); margin-bottom:30px; font-weight:300;">
+                Qualitative results demonstrating the effectiveness of core components and implementation on a smaller model size (Wan-1.3B).
+            </p>
+
+            <div class="rebuttal-update-grid">
+                
+                <div class="rebuttal-card">
+                    <h4>Ablation: Condition Bias & Task-aware RoPE</h4>
+                    <div class="carousel-container" id="ablation-carousel">
+                        <div class="carousel-track">
+                            <div class="carousel-item">
+                                <video class="video-player" playsinline autoplay muted loop poster="videos/posters/ablation_compare_poster.jpg">
+                                    <source src="videos/ablation_compare.mp4" type="video/mp4"> Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="caption">Comparing UNIC with and without our key innovations (Condition Bias & Task-aware RoPE).</p>
+                </div>
+
+                <div class="rebuttal-card">
+                    <h4>Implementation on Wan-1.3B</h4>
+                    <div class="carousel-container" id="wan-1-3b-carousel">
+                        <div class="carousel-track">
+                            <div class="carousel-item">
+                                <video class="video-player" playsinline autoplay muted loop poster="videos/posters/wan_poster.jpg">
+                                    <source src="videos/wan.mp4" type="video/mp4"> Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="caption">Demonstrating UNIC's capabilities scaled down to the Wan-1.3B architecture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="overview" class="section">
         <div class="container section-inner">
@@ -1534,15 +1575,17 @@
         document.querySelectorAll('.carousel-container').forEach(carouselContainer => {
             const track = carouselContainer.querySelector('.carousel-track');
             if (track) {
-                track.style.transform = 'translateX(0%)'; 
+                track.style.transform = 'translateX(0%)'; 
                 carousels[carouselContainer.id] = { currentIndex: 0 };
-                slideCarousel(carouselContainer.id, 0); 
+                slideCarousel(carouselContainer.id, 0); 
             }
         });
+
+        slideCarousel('ablation-carousel', 0);
+        slideCarousel('wan-1-3b-carousel', 0);
         
         initializeContentTabs('capabilities-selector', 'capabilities-content-area', 'task-entry', 'task-id-insertion');
         initializeContentTabs('comparisons-selector', 'comparisons-content-area', 'comparison-entry', 'comparison-id-insertion');
-
         const navLinks = document.querySelectorAll('nav a');
         let sections = [];
 
